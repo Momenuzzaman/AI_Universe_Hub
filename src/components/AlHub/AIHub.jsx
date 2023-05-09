@@ -44,6 +44,14 @@ const AIHub = () => {
     setUniqueId(id);
   };
 
+  // sorted data
+  const handleSort = () => {
+    const sortedData = tools.sort((a, b) => {
+      return new Date(b.published_in) - new Date(a.published_in);
+    });
+    setTools([...tools, sortedData]);
+  };
+
   // loader
   if (isLoading) {
     return (
@@ -55,7 +63,9 @@ const AIHub = () => {
 
   return (
     <div className="flex flex-col">
-      <Button>Sort By Date</Button>
+      <button onClick={handleSort}>
+        <Button>Sort By Date</Button>
+      </button>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-3 mx-auto">
         {tools &&
           tools
