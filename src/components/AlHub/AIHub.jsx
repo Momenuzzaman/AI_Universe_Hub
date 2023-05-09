@@ -1,11 +1,15 @@
 import { useEffect, useState } from "react";
 import AiTool from "../AiTool/AiTool";
 import Button from "../common/Button/Button";
+import Modal from "../Modal/Modal";
 
 const AIHub = () => {
   const [tools, setTools] = useState([]);
   const [showAll, setShowAll] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const [tool, setTool] = useState({});
+  const [uniqueId, setUniqueId] = useState(null);
+
   // load all data
   useEffect(() => {
     const fetchAiData = async () => {
@@ -18,10 +22,29 @@ const AIHub = () => {
     };
     fetchAiData();
   }, []);
+
+  // single data load
+  useEffect(() => {
+    const fetchSingleTool = async () => {
+      const response = await fetch(
+        `https://openapi.programming-hero.com/api/ai/tool/${uniqueId}`
+      );
+      const data = await response.json();
+      setTool(data.data);
+    };
+    fetchSingleTool();
+  }, [uniqueId]);
   // show all data function
   const handleShowAll = () => {
     setShowAll(!showAll);
   };
+
+  // modalHandler
+  const handleOpenModal = (id) => {
+    setUniqueId(id);
+  };
+
+  // loader
   if (isLoading) {
     return (
       <div className="flex items-center justify-center my-72">
@@ -29,6 +52,7 @@ const AIHub = () => {
       </div>
     );
   }
+
   return (
     <div className="flex flex-col">
       <Button>Sort By Date</Button>
@@ -36,7 +60,13 @@ const AIHub = () => {
         {tools &&
           tools
             .slice(0, showAll ? 12 : 6)
-            ?.map((tool) => <AiTool key={tool?.id} tool={tool} />)}
+            ?.map((tool) => (
+              <AiTool
+                key={tool?.id}
+                tool={tool}
+                handleOpenModal={handleOpenModal}
+              />
+            ))}
       </div>
 
       {!showAll && (
@@ -44,6 +74,8 @@ const AIHub = () => {
           <Button>Show AlL</Button>
         </button>
       )}
+      {/* modal */}
+      <Modal tool={tool} />
     </div>
   );
 };

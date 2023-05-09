@@ -1,8 +1,7 @@
 import React from "react";
 
-const AiTool = ({ tool }) => {
-  const { image, name, features, published_in } = tool;
-  console.log(tool);
+const AiTool = ({ tool, handleOpenModal }) => {
+  const { id, image, name, features, published_in } = tool;
   return (
     <div>
       <div className=":w-3/6 md:w-10/12 p-2 rounded-md shadow-md  dark:text-gray-50 mx-auto">
@@ -46,22 +45,25 @@ const AiTool = ({ tool }) => {
               </svg>{" "}
               <p> {published_in}</p>
             </div>
-            <div>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth={1.5}
-                stroke="currentColor"
-                className="w-10 h-10 bg-orange-200 rounded-full cursor-pointer hover:bg-orange-400 hover:text-white"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3"
-                />
-              </svg>
-            </div>
+            {/* modal open button */}
+            <button onClick={() => handleOpenModal(id)}>
+              <label htmlFor="tool-modal">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  strokeWidth={1.5}
+                  stroke="currentColor"
+                  className="w-10 h-10 bg-orange-200 rounded-full cursor-pointer hover:bg-orange-400 hover:text-white"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3"
+                  />
+                </svg>
+              </label>
+            </button>
           </div>
         </div>
       </div>
