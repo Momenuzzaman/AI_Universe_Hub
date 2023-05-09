@@ -41,7 +41,7 @@ const AIHub = () => {
 
       {!showAll && (
         <button onClick={handleShowAll}>
-          <Button>Show All</Button>
+          <Button>Show AlL</Button>
         </button>
       )}
     </div>
